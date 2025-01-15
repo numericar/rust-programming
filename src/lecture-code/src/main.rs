@@ -3,8 +3,9 @@
 // mod data_type;
 // mod control_flow;
 // mod function;
-mod ownership_borrowing;
+// mod ownership_borrowing;
+mod lifetime;
 
 fn main() {
-    ownership_borrowing::process();
+    lifetime::process();
 }

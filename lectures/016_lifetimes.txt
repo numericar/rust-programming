@@ -1,0 +1,42 @@
+Lifetimes
+    ใน rust จะทำให้เรามั่นใจได้ว่า reference ของข้อมูลจะยังคงถูกต้อง
+    ซึ่งถ้าไม่มี lifetimes ข้อมูลอาจจะหายไปเอง
+
+    lifetimes ใช้สำหรับบอกว่า reference นั้นจะยังคงอยู่ได้อีกนานแค่ไหน
+
+    ตัวอย่างการเปลี่ยน
+    
+    fn main() {
+        let t1 = "A";
+        let t2 = "BB";
+
+        let result = longest_treasure(t1, t2);
+        println("The long t is: {}", result);
+    }
+
+    fn longest_treasure(x: &str, y: &str) -> &str {
+        if x.len() > y.len() {
+            return x;
+        } else {
+            return y;
+        }
+    }
+
+    จากชุดคำสั่งดังกลาว จะเห็นว่า y มากกว่า x ทำให้ผลลัพธ์ที่ได้จะได้จาก else 
+    โดย x จะถูกทำลายออกไปจาก memory เนื่องจากไม่เข้าเงื่อนไข
+
+    โดยเราสามารถเพิ่ม lifetimes เข้าไปได้ เพื่อให้มั่นใจได้ว่า ข้อมูลจะไม่ถูกทำลาย
+
+    ตัวอย่าง 
+        fn longest_treasure(x: &'a str, y: &'a str) -> &'a str {
+            if x.len() > y.len() {
+                return x;
+            } else {
+                return y;
+            }
+        }
+
+    'a คือสัญลักษณ์ของ lifetime
+    โดย lifetime ของข้อมูลดังกล่าว จะมีอายุเท่ากับผู้ที่เรียกใช้งานมัน 
+    เช่น function main เรียกใช้ longest_treasure
+    เมื่อ longest_treasure ถูก pop ตัวข้อมูลของ t1, t2 จะยังอยู่จนกว่า main จะถูก pop
