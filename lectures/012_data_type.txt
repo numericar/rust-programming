@@ -1,0 +1,20 @@
+Data Types
+    ชนิดของข้อมูลใน rust มีอยู่ 4 แบบ คือ
+        1. Integer
+            1.1 จะต้องระบุจำนวน bit ที่ต้องการจะใช้ เช่น i32 = int 32 bit
+        2. Floating-Point Number
+        3. Boolean
+        4. Character
+        5. String
+        6. &str (reference string)
+
+    Dynamic Typing 
+        เป็นการที่ compiler จะระบุชนิดข้อมูลให้เอง
+        เช่น 
+            let x = 5; จะได้ i32 
+            let y = 5.0; จะได้ f64
+        
+        สามารถแปลงชนิดข้อมูลได้ 
+        เช่น 
+            y เป็นชนิด f64 เราต้องการจะแปลงเป็น i32 จะใช้แบบนี้
+            let sum: i32 = x + y as i32
