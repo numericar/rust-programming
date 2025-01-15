@@ -1,0 +1,10 @@
+
+    ในการสร้าง project rust จะใช้คำสั่ง 
+        cargo new [project-name]
+
+    รันโปรเจคด้วยคำสั่ง
+        cargo run
+
+    workspace
+        - main.rs       เป็นจุดเริ่มต้นของชุดคำสั่ง โดยด้านในจะมีฟังก์ชัน main()
+        - cargo.toml    ไฟล์สำหรับจัดการ package และ dependencies ของเรา
