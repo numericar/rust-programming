@@ -1,4 +1,4 @@
-fn main() {
+pub fn process() {
     let x: i32 = 10;
     let y: f64 = 0.5;
     let z: i32 = x + y as i32;

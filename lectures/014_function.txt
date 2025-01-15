@@ -1,0 +1,12 @@
+Funtions
+    เป็นการจัดกลุ่มของชุดคำสั่ง ทำให้สามารถนำมาใช้งานได้ง่ายขึ้น
+
+    โดยจะมีตัวอย่างชุดคำสั่งดังนี้
+
+        fn function_name(param: param_type) -> return_type {
+            return
+        }
+
+        fn add(a: i32, b: i32) -> i32 {
+            return a + b;
+        }

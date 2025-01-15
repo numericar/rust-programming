@@ -1,4 +1,4 @@
-fn main() {
+pub fn process() {
     if_statement();
     match_statement();
     loop_statement();
