@@ -1,0 +1,71 @@
+Ownership and Borrowing
+    โดยปกติแล้ว memory จะมีดังนี้
+        1. high address
+        2. low address
+
+    โดย low address จะมีหน้าที่จัดเตรียมค่าต่าง ๆ ให้พร้อมก่อนเรียกใช้งาน memory ในส่วนของ high address
+    เช่น 
+        - heap
+        - uninitialized data
+        - initialized data 
+        - code/text
+
+    high address ประกอบด้วย
+        - stack
+
+    stack จะถูกจัดการโดยคอมพิวเตอร์
+    heap นักพัฒนาจะต้องจัดการเอง
+
+    heap ทำงานร่วมกับ stack เสมอ
+
+    Ownership
+        เป็นระบบจัดการ memory ของ rust โดยสามารถจัดการ memory ของเรไาด้ตั้งแต่ขั้น compile time
+        โดยถ้าเจออะไรก็ตามที่มีความผิดปกติเกี่ยวกับการทำงานกับ memory มันจะแจ้งเราก่อน
+        โดยมีแนวคิดดังนี้
+            1. ทุก ๆ ข้อมูลใน rust จะต้องมีตัวแปรเป็นเจ้าของ (ตัวแปนที่อยู่ใน heap จะต้องถูก poiner มาจาก stack)
+            2. owner จะมีได้แค่ 1 ตัว
+            3. ถ้า compiler เห็นว่ามีตัวแปรไหนไมไ่ด้ใช้แล้ว มันจะลบออกจาก memory ทันที
+
+        ตัวอย่างการเปลี่ยน owner 
+            let crabby_treasure = String::from("gold coins"); // string จัดอยู่ใน heap
+            let crabby_treasure_copy = crabby_treasure; // เป็นการเปลี่ยน owner จากตัวแปร crabby_treasure เป็นตัวนี้
+
+            step:
+                1.  [crabby_treasure] -> ["gold coins"]
+                2.  [crabby_treasure]
+                    [crabby_treasure_copy] -> ["gold coins"]
+
+            หลังจากที่เปลี่ยน owner แล้ว ตัวแปร crabby_treasure จะไม่สามารถใช้งานได้อีก เนื่องจากไม่มีข้อมูลแล้ว
+            println!("{}", crabby_treasure);
+
+            โดยถ้าข้อมูลดังกล่าวเป็น heap เราสามารถใช้วิธีการ clone ข้อมูลออกมาได้
+            ซึ่งจะทำให้ owner ไม่ถูกโยกอีกต่อไป
+            let crabby_treasure = String::from("gold coins");
+            let crabby_treasure_copy = crabby_treasure.clone(); 
+            step:
+                1.  [crabby_treasure] -> ["gold coins"]
+                2.  [crabby_treasure] -> ["gold coins"]
+                    [crabby_treasure_copy] -> ["gold coins"]
+            แต่การ clone อาจทำให้เกิดปัญหากับ memory โดยจะทำให้เปลือง memory มากกว่าปกติ
+
+    Borrowing
+        จะเป็นการยืมข้อมูลใน hash จาก owner a ให้กับ owner b และหลังจากเสร็จแล้วจะทำการคืนข้อมูล
+        จาก owner b ให้กับ owner a
+        
+        โดยจะมีกฏการใช้งานดังนี้
+            1.  ใช้เครื่องหมาย & กับ owner ที่เราต้องการจะยืม
+            2.  owner สามารถให้คนอื่นยืมข้อมูลไปใช้ได้ทั้ง immutable และ mutable
+                โดยจะแบ่งได้ดังนี้ 
+                    1.1 immutable reference ยืมข้อมูลไปดูได้ แต่ไม่อนุญาติให้เปลี่ยนแปลง
+                    1.2 mutable reference ยืมข้อมูลไปดูได้ และสามารถเปลี่ยนแปลงข้อมูลได้ 
+                        แต่จะยืมได้แค่ทีละคน โดยใช้ keyword &mut
+
+        ตัวอย่างชุดคำสั่ง
+            let crabby_treasure = String::from("gold coins");
+            let borrow_treasure = &crabby_treasure;
+
+            println!("{}", borrow_treasure);
+            println!("{}", crabby_treasure);
+
+
+            

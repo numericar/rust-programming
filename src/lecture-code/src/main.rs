@@ -2,8 +2,9 @@
 // mod immu_mut;
 // mod data_type;
 // mod control_flow;
-mod function;
+// mod function;
+mod ownership_borrowing;
 
 fn main() {
-    function::process();
+    ownership_borrowing::process();
 }
