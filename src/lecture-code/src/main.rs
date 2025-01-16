@@ -6,8 +6,10 @@
 // mod ownership_borrowing;
 // mod lifetime;
 // mod lecture_struct;
-mod lecture_enums;
+// mod lecture_enums;
+// mod lecture_trait_generic;
+mod lecture_string;
 
 fn main() {
-    lecture_enums::process();
+    lecture_string::process();
 }
