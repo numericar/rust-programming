@@ -1,0 +1,19 @@
+Iterators and Closures
+    Iterators
+        เป็นการนำ vector หรือ array มาทำซ้ำเข้าถึงข้อมูลด้านใน
+
+    functional programming
+        เป็น chain method โดยสามารถเรียกใช้ function ต่อกันไป
+        ได้เรื่อย ๆ โดยจะส่งผลลัพธ์ของ function ก่อนหน้า ไปให้กับ
+        function ถัดไป จนได้ผลลัพธ์ออกมา
+
+    Closures 
+        ใช้สัญลักษณ์ |x| โดยอะไรที่อยู่ระหว่างกลาง คือ parameter 
+        โดยในนี้ x คือ parameter
+
+        มันเปรียบเสมือน function อีกรูปแบบหนึ่ง เหมือน arrow function ของ js หรือ inline function
+        ตัวอย่างชุดคำสั่ง
+            let add = |a, b| a + b;
+            let result = add(3, 4);
+
+    .collect() แปรงค่าที่ถูกประมวลผลต่าง ๆ มาแล้ว ให้กลับไปเป็นค่าของ vector

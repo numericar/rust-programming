@@ -10,8 +10,9 @@
 // mod lecture_trait_generic;
 // mod lecture_string;
 // mod lecture_loop;
-mod lecture_vectors;
+// mod lecture_vectors;
+mod lecture_iter;
 
 fn main() {
-    lecture_vectors::process();
+    lecture_iter::process();
 }
