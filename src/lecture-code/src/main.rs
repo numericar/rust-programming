@@ -4,8 +4,9 @@
 // mod control_flow;
 // mod function;
 // mod ownership_borrowing;
-mod lifetime;
+// mod lifetime;
+mod lecture_struct;
 
 fn main() {
-    lifetime::process();
+    lecture_struct::process();
 }
