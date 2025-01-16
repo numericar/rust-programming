@@ -5,8 +5,9 @@
 // mod function;
 // mod ownership_borrowing;
 // mod lifetime;
-mod lecture_struct;
+// mod lecture_struct;
+mod lecture_enums;
 
 fn main() {
-    lecture_struct::process();
+    lecture_enums::process();
 }
