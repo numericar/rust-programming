@@ -1,0 +1,31 @@
+HashMap
+    จัดเก็บข้อมูลในรูปแบบ key: value
+    โดยขอแค่มี key ก็จะสามารถเข้าถึง value ได้เลย
+    โดยไม่ต้องเสียเวลาวนซ้ำ แต่จะใช้ memory เยอะขึ้น
+
+    ตัวอย่างชุดคำสั่ง
+        use std::collections::HashMap;
+
+        let mut variable_name = HashMap::new();
+
+        variable_name.insert(key, value);
+
+        // option step
+        if let Some(value) = variable_name.get(key) {
+            *gem += 100; // pointer
+        }
+        จากตัวอย่างใน if เป็นการดึงข้อมูลออกมาจาก HashMap ผ่าน key
+        โดย Some จะตรวจสอบว่า ข้อมูลมีหรือไม่
+
+    ** ใน rust ไม่มี null
+
+    เราสามารถวนซ้ำ HashMap ได้ 
+        for (key, value) in hash_maps {
+
+        }
+
+    .unwarp_or(0);
+        ถ้าหาก get แล้วไม่เจอค่า จะทำการส่งคืน 0
+
+    .remove(key) 
+        ลบของออกจาก HashMap
