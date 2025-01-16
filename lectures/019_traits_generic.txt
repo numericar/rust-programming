@@ -1,0 +1,53 @@
+Trait and Generic
+    Trait
+        ใช้สำหรับกำหนดว่า impl ที่ทำการสืบทอดไป จะต้องมีพฤติกรรมอะไรบ้าง
+        ตัวอย่างชุดคำสั่ง
+            trait TraitName {
+                fn function_name(&self);
+            }
+        ตัวอย่างการใช้งาน 
+            trait TreasureCollector {
+                fn collect_treasure(&self);
+            }
+        ตัวอย่างการสืบทอด
+            struct Crabby {
+                name: String
+            }
+
+            impl TreasureCollector for Crabby {
+                fn collect_treasure(&self) {
+                    println!("{} is collect", self.name)
+                }
+            }
+
+            fn main() {
+                let crabby = Crabby {
+                    name: "bike".to_string()
+                };
+
+                crabby.collect_treasure();
+            }
+
+    ทำไมต้องใช้ trait ?
+        ในบางที เราจะมีโอกาศที่จะมีหลาย ๆ struct ที่มีพฤติกรรมเหมือนกัน
+        เช่น 
+            เรามี struct Hunter, Warrior, Mage 
+            แต่ทุก ๆ struct ที่เราสร้างมา ก็จะมี fn attact เหมือนกัน
+            แต่การทำงานข้างในต่างกัน
+
+    Generic
+        ทำให้ Struct หรือ Trait สามารถรับชนิดข้อมูลได้หลากหลาย
+        โดยที่เราไม่ต้องเขียนชุดคำสั่งซ้ำ ๆ เพื่อรับข้อมูลหลายชนิด แต่ขั้นตอนการทำงานเหมือนกัน
+        ตัวอย่างชุดคำสั่ง
+            fn collect_any_treasure<T>(treasure: T) {
+                println!("You collect some treasure: {:?}", treasure);
+            }
+            collect_any_treasure(10);
+            collect_any_treasure("Dimond");
+        
+        <?> คือ generic parameter
+        T เป็นตัวแทนของชนิดข้อมูล ที่จะส่งเข้ามาใน fn
+
+        สามารถใส่เงื่อนไขให้กับ generic ได้ 
+        ตัวอย่างชุดคำสั่ง
+            impl<T> DisplayItem for Inventory<T> where T: std::fmt::Debug
