@@ -9,8 +9,9 @@
 // mod lecture_enums;
 // mod lecture_trait_generic;
 // mod lecture_string;
-mod lecture_loop;
+// mod lecture_loop;
+mod lecture_vectors;
 
 fn main() {
-    lecture_loop::process();
+    lecture_vectors::process();
 }

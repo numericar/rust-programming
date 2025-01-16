@@ -1,0 +1,29 @@
+Vectors
+    เป็น dynamic array สามารถเก็บข้อมูลได้ไม่จำกัด
+    โดยจะจองพื้นที่ไว้ใน memory 
+
+    ตัวอย่างชุดคำสั่ง
+        let mut variable_names: Vec<String> = Vec::new();
+
+        variable_names.push("a".to_string());
+
+    โดยเราสามารถเข้าถึงข้อมูลที่เก็บอยู่ข้างใน vector ได้ ผ่านการ borrowing
+        let mut fruits: Vec<&str> = Vec::new();
+        fruits.push(&"apple");
+
+        let favorite_fruit: &str = &fruits[1];
+
+    .pop()
+        เป็นการเอาตัวล่าสุดออก และนำตัวที่เอาออกมานั้น return กลับมา
+
+    .remove(index: i32)
+        ลบข้อมูลจาก index ที่ระบุ
+
+    .len()
+        ดูว่าปัจจุบันมีข้อมูลอยู่กี่ตัว
+
+    .capacity()
+        เข้าถึงข้อมูลว่า vector นั้นเก็บข้อมูลได้สูงสุดกี่ตัว
+
+    ถ้าเป็น vec ที่กำหนดค่าเริ่มต้น
+        let mut fruits: Vec<&str> = vec!["banana"];
