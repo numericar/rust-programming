@@ -1,0 +1,68 @@
+struct
+    ใช้สำหรับจัดกลุ่มของข้อมูล ให้มาอยู่ด้วยกัน
+    เช่น 
+        หมา จะมี ชื่อ, สีผิว, อายุ
+
+    ตัวอย่าง struct
+        struct Crabby {
+            name: String,
+            skill_level: u32,
+            hit_point: i32
+        }
+
+    โดยชื่อของ struct จะขึ้นต้นด้วยพิมใหญ่เสมอ
+    
+    การใช้งานจะต้องนำตัวแปรมารับก่อน (สร้าง instance)
+    let crabby: Crabby = Crabby {
+        name: String::from("Crabby"),
+        skill_level: 10,
+        hit_point: 100
+    }
+
+    ถ้าจะให้ instance เปลี่ยนค่าได้ จะต้องประกาศให้เป็น mut
+    let mut crabby: Crabby = Crabby {
+        name: String::from("Crabby"),
+        skill_level: 10,
+        hit_point: 100
+    }
+
+    โดย struct สามารถจัดเก็บ function ได้ด้วย 
+    impl Crabby {
+        fn take_damage(&mut selt, damage: 12) {
+            selt.hit_point -= damage;
+        }
+    }
+
+    โดย &mut selt จะเป็นการเข้าถึง struct ตัวเอง
+    
+    เราสามารถ copy ของจาก instance เดิม มาใส่ instance ใหม่ได้แบบง่าย
+    โดยการใช้ ...
+
+    let crabby1: Crabby = Crabby {
+        name: String::from("Crabby"),
+        skill_level: 10,
+        hit_point: 100
+    }
+
+    let crabby2: Crabby = Crabby {
+        name: String::from("Crabby-2"),
+        ...crabby1
+    }
+
+    จากตัวอย่าง crabby2 จะมี name = Crabby-2
+    ส่วนข้อมูลที่เหลือจะคัดลอกมาจาก crabby1
+
+    ** ข้อควรระวังของการ copy 
+    field ใดก็ตามที่เป็นข้อมูลอยู่ใน heap 
+    มันจะไม่ใช่การคัดลอกข้อมูลมา แต่จะเป็นการเปลี่ยน owner ของข้อมูล
+
+    เราสามารถประกาศรูปแบบ tuple ได้ 
+    ตัวอย่าง struct Name(param1, param2);
+    เช่น struct Position (i32, i32); และเรียกใช้งานได้ตาม index ได้เลย
+
+    โดยเราสามารถเรียกใช้งานได้ 
+        fn main() {
+            let crabby_position = Position(10, 5);
+            let x = crabby_position.0; // 10
+            let y = crabby_position.1; // 5
+        }
