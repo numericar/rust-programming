@@ -1,0 +1,68 @@
+Error Handling
+    ข้อผิดพลาดสามารถเกิดขึ้นได้หลายกรณี โดยใน rust เราสามารถจัดการข้อผิดพลาดได้ผ่าน Result, Option
+
+    Option<T>
+        หมายถึง ค่าที่จะส่งคืนออกมา จะมีค่าหรือไม่มีค่าก็ได้
+
+        Some(T)
+            ถ้าหากว่าค่าจาก Option นั้นมีอยู่จริง จะถูกเก็บไว้ในนี้ โดย T จะแทนข้อมูลที่ได้จาก option
+
+        None 
+            เป็นประเภทเมื่อไม่มีข้อมูล
+
+        รูปแบบการรัที่แนะนำ 
+            match value {
+                Some(t) => println!("{}", t), 
+                None => statement // ถ้าไม่มีข้อมูล
+            }
+
+        ถ้าหากสนใจแค่ค่า ไม่ได้สนใจว่าถ้าไม่มีค่าจะต้องจัดการอย่างไร
+            if let Some(value) = values.get(3) {
+                println!("{}", value);
+            }
+
+    Result<result, error>
+        ใช้จัดการกับการทำงาน ที่มีโอกาศที่จะเกิดข้อผิดพลาดได้ โดยจะส่งผลผ่าน generic
+        โดยจัดการได้ดังนี้
+            - Ok(data) ใช้สำหรับการใส่ข้อมูลให้กับ result เมื่อไม่มีข้อผิดพลาด
+            - Err(data) ใช้สำหรับการใส่ข้อมูลให้กับ result เมื่อมีข้อผิดพลาด
+
+        รูปแบบการรัที่แนะนำ
+            Match pattern
+                match chest_result {
+                    Ok(message) => println!("{}", message),
+                    Err(error) => println!("{}", error)
+                }
+
+            Instance Declaration
+                let chest_result = match open_chest(true) {
+                    Ok(message) => message,
+                    Err(error) => println!("{}", error)
+                }
+
+            If let pattern
+                if let Ok(chest_result) = open_chest(true) {
+                    println!("{}", chest_result);
+                }
+
+        ถ้าหากต้องการให้ เมื่อเกิดข้อผิดพลาดจะไม่ส่งผลต่อระบบ แต่ให้ทำการส่งค่าเริ่มต้นมาแทน
+            let fruits = vec!["apple", "banana"];
+            let favorite_fruit = fruits.get(3).unwrap_or("banana");
+
+            unwrap_or_else จะต้องใช้แบบ closure
+            let favorite_fruit = fruits.get(3).unwrap_or_else(|| "banana");
+
+        ในกรณีที่เราไม่ได้สนใจอะไรเลย
+            let favorite_fruit = fruits.get().unwrap();
+
+        Propagating Error with ?
+            ถ้าหาก function นั้นส่งคืน Result แล้วเราขี้เกียจทำ match pattern
+            และ function ที่เรียกใช้งาน ก็ return Result อีกทีหนึ่ง
+            เราสามารถทำแบบนี้ได้
+
+            fn main() -> Result<(), String> {
+                let chest_result = open_chest(false)?;
+                Ok(())
+            }
+
+            ? หมายถึง ถ้าสำเร็จมันจะ return Ok() และถ้าไม่มันจะ Err() ให้เอง

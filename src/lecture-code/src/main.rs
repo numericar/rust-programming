@@ -12,8 +12,9 @@
 // mod lecture_loop;
 // mod lecture_vectors;
 // mod lecture_iter;
-mod lecture_hashmap;
+// mod lecture_hashmap;
+mod lecture_err_handling;
 
 fn main() {
-    lecture_hashmap::process();
+    lecture_err_handling::process();
 }
