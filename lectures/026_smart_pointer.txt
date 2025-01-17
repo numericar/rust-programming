@@ -1,0 +1,59 @@
+Smart Pointer
+    เป็นเครื่องมือที่ช่วยให้เราสามารถจัดการกับ memory ได้
+    
+    Box<T>
+        เป็น smart pointr ที่สามารถเก็บข้อมูลอะไรก็ได้บน heap แทนที่จะเก็บบน stack ซึ่ง
+        ทำให้เราสามารถจัดการกับเหนื่อยความจำได้อย่างมีประสิทธิภาพและยืดหยุ่น
+
+        การจัดเก็บค่าบน heap 
+            ค่าใน box จะถูกจะเก็บไว้ใน heap แต่ตัว box จะอยู่บน stack 
+        
+        การส่ง ownership
+            box จะเป็นเจ้าของข้อมูลที่มันเก็บไว้ใน heap และค่าที่มันเก็บจะถูกทำลายเมื่อ
+            box ถูก pop ออกจาก memory 
+
+        ขนาดคงที่
+            ขนาดของ Box<T> จะคงที่เสมอบน stack เนื่องจากมันเป็น Pointer ที่ชี้ไปหาข้อมูลบน heap
+
+    Rc<T> (Reference Counting)
+        ปกติแล้วใน rust จะอนุญาติให้ heap 1 ตัวมีได้แค่ 1 ownership
+        การใช้งาน Rc<T> ทำให้ heap 1 ตัวสามารถมีได้หลาย ownership
+        
+        โดยจะช่วยให้จัดการกับ memory ได้ดีขึ้น ประหยัดเนื้อที่มากขึ้น
+
+        ตัวอย่างชุดคำสั่ง
+            use std::rc::Rc;
+
+            let sword = String::from("Sword");
+            let epic_loot = Rc::new(sword); // ทำให้ heap ที่เก็บ sword อยู่มีได้หลาย owner 
+
+            let loot_1 = Rc::clone(&epic_loot); // ทำให้ loot_1 เป็น owner ของ sword
+            let loot_2 = Rc::clone(&epic_loot); // ทำให้ loot_2 เป็น owner ของ sword
+
+        โดย Reference Counting จะตรวจสอบว่ายังมีคนที่ Reference มาหา heap นี้อยู่ไหม
+        ถ้ายังมีอยู่ มันจะไม่ให้ drop
+
+    RefCell<T>
+        ทำให้ข้อมูลที่เรากำลัง reference ไปหา เป็น Mutable สามารถเปลี่ยนแปลงได้
+        ตัวอย่างชุดคำสั่ง
+            
+            use std::{cell::RefCell, rc::Rc};
+
+            let gold = Box::new(10);
+            let epic_loot = Rc::new(RefCell::new(gold));
+
+            let loot_1 = Rc::clone(&epic_loot);
+            let loot_2 = Rc::clone(&epic_loot);
+
+            **loot_1.borrow_mut() += 20;
+            **loot_2.borrow_mut() += 100;
+
+        จากชุดคำสั่งดังกล่าว เดิมที่ gold จะเป็น Immutable เมื่อใช้งาน RefCell จะทำให้กลายเป็น
+        Mutable
+
+        * ใช้สำหรับเข้าถึงข้อมูลที่ Pointer กำลังชี้ไป
+            โดยจากตัวอย่าง จะเห็นได้ว่ามี 2 * เนื่องจาก 
+                1. * ใช้กับข้อมูลที่เป็น reference (RefCell) โดยมันจะชี้ไปหาข้อมูลที่ RefCell เก็บไว้
+                    ก็คือ Box 
+                2. * เนื่องจาก Box เป็น reference เราจึงต้องเข้าถึงข้อมูลที่ Box เก็บไว้อีกรอบหนึ่ง
+                    เพื่อที่จะได้ค่า 10 ออกมา
